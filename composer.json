@@ -1,0 +1,24 @@
+{
+  "name": "mitango/iptics-synchronization",
+  "type": "plugin",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "cyrille",
+      "email": "coquardcyr@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Coquardcyr\\Linepay\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Coquardcyr\\Linepay\\Tests\\": "tests/"
+    }
+  }
+}
