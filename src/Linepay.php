@@ -8,15 +8,15 @@ use Coquardcyr\Linepay\ObjectValue\LogoType;
 class Linepay
 {
     public static function getLogo(CountryCode $code, LogoType $type, int $width) {
-        $filename = '';
+        $country = strtolower($code->getValue());
+        $filename =  __DIR__ . "/assets/logo/{$country}/logo/logo_{$type->getValue()}.png";
         // Get new sizes
         list($image_width, $image_height) = getimagesize($filename);
-
-        $newwidth = $width * $percent;
-        $newheight = $height * $percent;
-        $thumb = imagecreatetruecolor($newwidth, $newheight);
+        $ratio = $image_width / $width;
+        $newheight = $image_height * $ratio;
+        $thumb = imagecreatetruecolor($width, $newheight);
         $source = imagecreatefromjpeg($filename);
-        imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+        imagecopyresized($thumb, $source, 0, 0, 0, 0, $width, $newheight, $image_width, $image_height);
         ob_start();
         imagepng($thumb);
         $image_data = ob_get_contents();
