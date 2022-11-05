@@ -2,11 +2,8 @@
 
 namespace Coquardcyr\Linepay\ObjectValue;
 
-class LogoType extends ObjectValue
+class Price extends ObjectValue
 {
-    const HORIZONTAL = 'h';
-    const SQUARE = 'v';
-
     /**
      * @var string
      */

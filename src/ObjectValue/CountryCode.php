@@ -2,7 +2,7 @@
 
 namespace Coquardcyr\Linepay\ObjectValue;
 
-class CountryCode
+class CountryCode extends ObjectValue
 {
     const JAPAN = 'JP';
     const THAILAND = 'TH';
