@@ -8,6 +8,11 @@ class CountryCode extends ObjectValue
     const THAILAND = 'TH';
     const TAIWAN = 'TW';
 
+    public static $values = [
+        self::JAPAN,
+        self::TAIWAN,
+        self::THAILAND
+    ];
     /**
      * @var string
      */
@@ -18,7 +23,7 @@ class CountryCode extends ObjectValue
      */
     public function __construct(string $value)
     {
-        $this->value = $value;
+        $this->setValue($value);
     }
 
 
@@ -27,7 +32,10 @@ class CountryCode extends ObjectValue
     }
 
     public function setValue(string $value) {
-
+        if( ! in_array($value, self::$values)) {
+            throw new InvalidValue();
+        }
+        $this->value = $value;
     }
 
 }

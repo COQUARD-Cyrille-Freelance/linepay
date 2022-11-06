@@ -5,20 +5,31 @@ namespace Coquardcyr\Linepay\ObjectValue;
 class Price extends ObjectValue
 {
     /**
-     * @var string
+     * @var float
      */
-    protected $value = '';
+    protected $value;
 
     /**
-     * @param string $value
+     * @param float $value
      */
-    public function __construct(string $value)
+    public function __construct(float $value)
     {
-        $this->value = $value;
+        $this->setValue($value);
     }
 
 
-    public function getValue(): string {
+    public function getValue(): float {
         return $this->value;
+    }
+
+    /**
+     * @param float $value
+     */
+    public function setValue($value)
+    {
+        if(! $value < 0) {
+            throw new InvalidValue();
+        }
+        $this->value = $value;
     }
 }
