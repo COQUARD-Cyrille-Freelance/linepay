@@ -2,7 +2,7 @@
 
 namespace Coquardcyr\Linepay\Response;
 
-class RefundResponse
+class RefundResponse extends AbstractResponse
 {
 
 }

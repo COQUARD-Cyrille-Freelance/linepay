@@ -6,6 +6,7 @@ use Coquardcyr\Linepay\ObjectValue\CountryCode;
 use Coquardcyr\Linepay\ObjectValue\LogoType;
 use Coquardcyr\Linepay\Proxy\HTTPClient;
 use Coquardcyr\Linepay\Request\AbstractRequest;
+use Coquardcyr\Linepay\Response\ResponseFactory;
 
 class Linepay
 {
@@ -28,15 +29,21 @@ class Linepay
     protected $client;
 
     /**
+     * @var ResponseFactory
+     */
+    protected $response_factory;
+
+    /**
      * @param string $id_channel
      * @param string $secret_channel
      */
-    public function __construct(string $id_channel, string $secret_channel, bool $dev = false, HTTPClient $client = null)
+    public function __construct(string $id_channel, string $secret_channel, bool $dev = false, HTTPClient $client = null, ResponseFactory $response_factory = null)
     {
         $this->id_channel = $id_channel;
         $this->secret_channel = $secret_channel;
         $this->base_url = $dev ? 'https://sandbox-api-pay.line.me': 'https://api-pay.line.me';
         $this->client = $client;
+        $this->response_factory = $response_factory ?: new ResponseFactory();
     }
 
     public function prepare(AbstractRequest $request) {
@@ -47,9 +54,10 @@ class Linepay
 
     public function run(AbstractRequest $request) {
         if(! $this->client) {
-            return;
+            return null;
         }
-
+        $response = $this->client->send($request);
+        return $this->response_factory->make($request, $response);
     }
 
     public static function getLogo(CountryCode $code, LogoType $type, int $width) {
