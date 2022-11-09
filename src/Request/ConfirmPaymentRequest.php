@@ -4,6 +4,8 @@ namespace Coquardcyr\Linepay\Request;
 
 use Coquardcyr\Linepay\ObjectValue\Currency;
 use Coquardcyr\Linepay\ObjectValue\Price;
+use Coquardcyr\Linepay\Utils\Clock;
+use Coquardcyr\Linepay\Utils\Uniq;
 
 class ConfirmPaymentRequest extends AbstractRequest
 {
@@ -25,8 +27,9 @@ class ConfirmPaymentRequest extends AbstractRequest
      * @param Currency $currency
      * @param string $transaction_id
      */
-    public function __construct(Price $amount, Currency $currency, string $transaction_id)
+    public function __construct(Price $amount, Currency $currency, string $transaction_id, Uniq $uniq = null, Clock $clock = null)
     {
+        parent::__construct($uniq, $clock);
         $this->amount = $amount;
         $this->currency = $currency;
         $this->transaction_id = $transaction_id;

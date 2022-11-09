@@ -50,6 +50,7 @@ class Linepay
         $request->setChannelId($this->id_channel);
         $request->setChannelSecret($this->secret_channel);
         $request->setBaseUrl($this->base_url);
+        return $request;
     }
 
     public function run(AbstractRequest $request) {
@@ -60,7 +61,7 @@ class Linepay
         return $this->response_factory->make($request, $response);
     }
 
-    public static function getLogo(CountryCode $code, LogoType $type, int $width) {
+    public static function get_logo(CountryCode $code, LogoType $type, int $width) {
         $country = strtolower($code->getValue());
         $filename =  __DIR__ . "/assets/logo/{$country}/logo/logo_{$type->getValue()}.png";
         // Get new sizes

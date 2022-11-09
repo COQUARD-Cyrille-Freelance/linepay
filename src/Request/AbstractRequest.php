@@ -2,6 +2,10 @@
 
 namespace Coquardcyr\Linepay\Request;
 
+use Coquardcyr\Linepay\Proxy\RequestResponse;
+use Coquardcyr\Linepay\Utils\Clock;
+use Coquardcyr\Linepay\Utils\Uniq;
+
 abstract class AbstractRequest
 {
     protected $channel_id;
@@ -15,14 +19,31 @@ abstract class AbstractRequest
 
     protected $body = '';
 
+    /**
+     * @var Uniq
+     */
+    protected $uniq;
+
+    /**
+     * @var Clock
+     */
+    protected $clock;
+
+    public function __construct(Uniq $uniq = null, Clock $clock = null)
+    {
+        $this->uniq = $uniq ?: new Uniq();
+        $this->clock = $clock?: new Clock();
+    }
+
+
     protected function generate_headers() {
-        $nonce = time() . uniqid();
+        $nonce = $this->clock->time() . $this->uniq->uniq();
         $secret = base64_encode(hash_hmac('sha256',  $this->channel_secret . $this->path . $this->body . $nonce,
             $this->channel_secret,
             true));
         $this->headers = [];
         $this->headers['X-LINE-ChannelId'] = $this->channel_id;
-        $this->headers['X-LINE-ChannelSecret'] = $this->channel_id;
+        $this->headers['X-LINE-ChannelSecret'] = $this->channel_secret;
         $this->headers['Content-Type'] = 'application/json';
         $this->headers['X-LINE-Authorization'] = $secret;
         $this->headers['X-LINE-Authorization-Nonce'] = $nonce;

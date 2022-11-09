@@ -3,6 +3,8 @@
 namespace Coquardcyr\Linepay\Response;
 
 use Coquardcyr\Linepay\Proxy\RequestResponse;
+use Coquardcyr\Linepay\Utils\Clock;
+use Coquardcyr\Linepay\Utils\Uniq;
 
 abstract class AbstractResponse
 {

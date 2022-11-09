@@ -29,5 +29,6 @@ class Test_Prepare extends TestCase
         $this->request->expects()->setChannelId('id_channel');
         $this->request->expects()->setChannelSecret('secret_channel');
         $this->request->expects()->setBaseUrl('https://api-pay.line.me');
+        $this->assertSame($this->request ,$this->linepay->prepare($this->request));
     }
 }
