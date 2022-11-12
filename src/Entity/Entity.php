@@ -6,7 +6,11 @@ use JsonSerializable;
 
 class Entity implements JsonSerializable
 {
-
+    /**
+     * Serialize properties from the entity for later JSON encodage.
+     *
+     * @return array
+     */
     public function jsonSerialize()
     {
         $attributes = get_class_vars(get_class($this));
@@ -23,6 +27,12 @@ class Entity implements JsonSerializable
         return $rtn;
     }
 
+    /**
+     * Serialize an attribute for JSON.
+     *
+     * @param mixed $value value of the attribute to be serialized.
+     * @return mixed
+     */
     protected static function parseJsonAttribute($value) {
         if($value instanceof JsonSerializable) {
             return $value->jsonSerialize();

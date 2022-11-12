@@ -9,6 +9,11 @@ class Currency extends ObjectValue
     const TWD = 'TWD';
     const THB = 'THB';
 
+    /**
+     * All possible values.
+     *
+     * @var string[]
+     */
     public static $values = [
       self::USD,
       self::JPY,
@@ -16,6 +21,11 @@ class Currency extends ObjectValue
       self::THB
     ];
 
+    /**
+     * Map of possible decimals.
+     *
+     * @var int[]
+     */
     public static $decimals = [
         self::USD => 2,
         self::JPY => 0,
@@ -24,12 +34,16 @@ class Currency extends ObjectValue
     ];
 
     /**
+     * Currency value.
+     *
      * @var string
      */
     protected $value = '';
 
     /**
-     * @param string $value
+     * Initialize the class.
+     *
+     * @param string $value Currency value.
      */
     public function __construct(string $value)
     {
@@ -37,10 +51,20 @@ class Currency extends ObjectValue
     }
 
 
+    /**
+     * Get the currency value.
+     * @return string
+     */
     public function getValue(): string {
         return $this->value;
     }
 
+    /**
+     * Set the currency value.
+     * @param string $value Currency value.
+     * @return void
+     * @throws InvalidValue
+     */
     public function setValue(string $value) {
         if( ! in_array($value, self::$values)) {
             throw new InvalidValue();
@@ -48,6 +72,13 @@ class Currency extends ObjectValue
         $this->value = $value;
     }
 
+    /**
+     * Parse the value with the current currency.
+     *
+     * @param float $value value to be parsed.
+     *
+     * @return string
+     */
     public function parseValue(float $value): string {
         if(! in_array($this->value, self::$values)) {
             return $value;

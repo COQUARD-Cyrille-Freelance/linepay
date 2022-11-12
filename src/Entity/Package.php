@@ -4,29 +4,41 @@ namespace Coquardcyr\Linepay\Entity;
 
 use Coquardcyr\Linepay\ObjectValue\Price;
 
+/**
+ * Package of products.
+ */
 class Package extends Entity
 {
     /**
+     * Id from the package.
+     *
      * @var string
      */
     protected $id;
     /**
+     * Name from the package.
+     *
      * @var string
      */
     protected $name = '';
     /**
+     * Products from the package.
+     *
      * @var Product[]
      */
     protected $products = [];
     /**
+     * Price from the product.
      * @var Price
      */
     protected $amount = 0;
 
     /**
-     * @param string $id
-     * @param string $name
-     * @param Product[] $products
+     * Initialize the class.
+     *
+     * @param string $id Id from the package.
+     * @param string $name Name from the package.
+     * @param Product[] $products Price from the product.
      */
     public function __construct(string $id, string $name, array $products)
     {
@@ -48,7 +60,8 @@ class Package extends Entity
     }
 
     /**
-     * @return float
+     * Get the amount from the package.
+     * @return Price
      */
     public function get_amount() {
         return $this->amount;

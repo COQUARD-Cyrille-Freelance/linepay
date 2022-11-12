@@ -1,7 +1,14 @@
 {
-  "name": "mitango/iptics-synchronization",
-  "type": "plugin",
+  "name": "mitango/linepay-sdk",
+  "description": "LINE Pay SDK for PHP",
+  "type": "library",
   "license": "MIT",
+  "keywords": ["LINE Pay", "api", "php", "sdk", "LINE SDK"],
+  "homepage": "https://github.com/COQUARD-Cyrille-Freelance/linepay",
+  "support": {
+    "issues": "https://github.com/COQUARD-Cyrille-Freelance/linepay/issues",
+    "source": "https://github.com/COQUARD-Cyrille-Freelance/linepay"
+  },
   "authors": [
     {
       "name": "cyrille",
