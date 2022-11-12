@@ -2,6 +2,8 @@
 
 namespace Coquardcyr\Linepay\Entity;
 
+use Coquardcyr\Linepay\ObjectValue\Price;
+
 class Package extends Entity
 {
     /**
@@ -17,7 +19,7 @@ class Package extends Entity
      */
     protected $products = [];
     /**
-     * @var float
+     * @var Price
      */
     protected $amount = 0;
 
@@ -32,10 +34,17 @@ class Package extends Entity
         $this->name = $name;
         $this->products = $products;
 
-        $this->amount = array_reduce($products, function (float $amount, Product $product) {
-            return $amount + $product->get_price();
+        $amount = array_reduce($products, static function (float $amount, Product $product) {
+            return $amount + $product->get_price()->getValue();
         }, 0);
+        $currency = array_reduce($products, static function($currency, Product $product) {
+            if($currency) {
+                return $currency;
+            }
+            return $product->get_price()->getCurrency();
+        }, null);
 
+        $this->amount = new Price($amount, $currency);
     }
 
     /**

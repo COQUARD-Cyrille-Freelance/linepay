@@ -2,7 +2,9 @@
 
 namespace Coquardcyr\Linepay\Entity;
 
-class Entity implements \JsonSerializable
+use JsonSerializable;
+
+class Entity implements JsonSerializable
 {
 
     public function jsonSerialize()
@@ -10,8 +12,22 @@ class Entity implements \JsonSerializable
         $attributes = get_class_vars(get_class($this));
         $rtn = array();
         foreach (array_keys($attributes) as $var) {
-            $rtn[] = $var;
+            if(is_array($this->{$var})) {
+                $rtn[$var] = array_map(static function ($e) {
+                    return self::parseJsonAttribute($e);
+                }, $this->{$var});
+            } else {
+                $rtn[$var] = $this->parseJsonAttribute($this->{$var});
+            }
         }
-        return json_encode($rtn);
+        return $rtn;
+    }
+
+    protected static function parseJsonAttribute($value) {
+        if($value instanceof JsonSerializable) {
+            return $value->jsonSerialize();
+        }
+
+        return $value;
     }
 }

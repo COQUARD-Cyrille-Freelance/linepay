@@ -27,7 +27,7 @@ class Quantity extends ObjectValue
      */
     public function setValue($value)
     {
-        if(! $value < 0) {
+        if($value < 0) {
             throw new InvalidValue();
         }
         $this->value = $value;

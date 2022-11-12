@@ -13,6 +13,7 @@ class CountryCode extends ObjectValue
         self::TAIWAN,
         self::THAILAND
     ];
+
     /**
      * @var string
      */

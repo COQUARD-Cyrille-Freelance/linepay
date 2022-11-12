@@ -16,6 +16,13 @@ class Currency extends ObjectValue
       self::THB
     ];
 
+    public static $decimals = [
+        self::USD => 2,
+        self::JPY => 0,
+        self::TWD => 2,
+        self::THB => 2
+    ];
+
     /**
      * @var string
      */
@@ -39,5 +46,12 @@ class Currency extends ObjectValue
             throw new InvalidValue();
         }
         $this->value = $value;
+    }
+
+    public function parseValue(float $value): string {
+        if(! in_array($this->value, self::$values)) {
+            return $value;
+        }
+        return number_format($value, self::$decimals[$this->value]);
     }
 }
