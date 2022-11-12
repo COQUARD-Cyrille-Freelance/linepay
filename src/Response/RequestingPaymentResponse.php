@@ -23,7 +23,7 @@ class RequestingPaymentResponse extends AbstractResponse
             return;
         }
 
-        $body = json_encode($requestResponse->getBody());
+        $body = json_decode($requestResponse->getBody());
         if(! $body || ! property_exists($body, 'info') || ! property_exists($body->info, 'transactionId') || ! property_exists($body->info, 'paymentUrl')|| ! property_exists($body->info->paymentUrl, 'web') ) {
             $this->is_success = false;
             return;

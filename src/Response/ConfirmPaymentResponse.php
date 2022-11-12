@@ -15,7 +15,7 @@ class ConfirmPaymentResponse extends AbstractResponse
     /**
      * @var string
      */
-    protected $transaction_id;
+    protected $transaction_id = '';
 
     public function __construct(RequestResponse $requestResponse)
     {
@@ -24,7 +24,7 @@ class ConfirmPaymentResponse extends AbstractResponse
             return;
         }
 
-        $body = json_encode($requestResponse->getBody());
+        $body = json_decode($requestResponse->getBody());
 
         if(! $body || ! property_exists($body, 'info') || ! property_exists($body->info, 'transactionId') || !property_exists($body->info, 'payInfo')) {
             $this->is_success = false;
@@ -38,5 +38,21 @@ class ConfirmPaymentResponse extends AbstractResponse
             }
             $this->payInfo[] = new PaymentInfo($value->method, new Price($value->amount));
         }
+    }
+
+    /**
+     * @return array|PaymentInfo[]
+     */
+    public function getPayInfo(): array
+    {
+        return $this->payInfo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransactionId(): string
+    {
+        return $this->transaction_id;
     }
 }

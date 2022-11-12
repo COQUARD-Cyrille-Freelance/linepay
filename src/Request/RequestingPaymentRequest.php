@@ -3,7 +3,9 @@
 namespace Coquardcyr\Linepay\Request;
 
 use Coquardcyr\Linepay\Entity\Package;
+use Coquardcyr\Linepay\Entity\Product;
 use Coquardcyr\Linepay\ObjectValue\Currency;
+use Coquardcyr\Linepay\ObjectValue\Price;
 use Coquardcyr\Linepay\Utils\Clock;
 use Coquardcyr\Linepay\Utils\Uniq;
 
@@ -59,8 +61,17 @@ class RequestingPaymentRequest extends AbstractRequest
         $this->cancel_url = $cancel_url;
 
         $amount = array_reduce($this->packages, function (float $amount, Package $package) {
-           return $amount + $package->get_amount();
+           return $amount + $package->get_amount()->getValue();
         }, 0);
+
+        $currency = array_reduce($this->packages, static function($currency, Package $package) {
+            if($currency) {
+                return $currency;
+            }
+            return $package->get_amount()->getCurrency();
+        }, null);
+
+        $amount = new Price($amount, $currency);
 
         $this->body = json_encode([
             'amount' => $amount,
